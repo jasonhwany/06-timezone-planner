@@ -1,4 +1,5 @@
 "use client";
+import AdUnit from "@/components/AdUnit"
 import { useState, useEffect } from "react";
 
 const CITIES = [
