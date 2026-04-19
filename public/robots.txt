@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://time.moneystom7.com/sitemap.xml

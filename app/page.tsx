@@ -1,5 +1,19 @@
 "use client";
 import AdUnit from "@/components/AdUnit"
+
+import Script from "next/script"
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "세계 시간대 변환기 (World Clock)",
+  url: "https://time.moneystom7.com",
+  description: "전 세계 도시의 현재 시간을 확인하는 무료 시계",
+  applicationCategory: "UtilityApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
+  inLanguage: ["ko", "en"],
+}
 import { useState, useEffect } from "react";
 
 const CITIES = [
