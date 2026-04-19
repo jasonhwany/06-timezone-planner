@@ -10,13 +10,11 @@ export const metadata: Metadata = {
     default: "세계 시간대 변환기 — MoneyStom7",
     template: "%s | MoneyStom7",
   },
-  description: "전 세계 도시의 현재 시간을 한눈에. 무료 세계 시간대 변환기. Free world clock and timezone converter. Check current time in cities worldwide instantly.",
-  keywords: ["세계 시간대 변환기", "World Clock", "무료", "온라인", "계산기", "world clock", "timezone converter", "time zone", "international time"],
-  authors: [{ name: "MoneyStom7" }],
+  description: "전 세계 도시의 현재 시간을 한눈에. Free world clock and timezone converter.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "세계 시간대 변환기 — MoneyStom7",
-    description: "전 세계 도시의 현재 시간을 한눈에. 무료 세계 시간대 변환기.",
+    description: "전 세계 도시의 현재 시간을 한눈에. Free world clock and timezone converter.",
     url: BASE_URL,
     siteName: "MoneyStom7",
     locale: "ko_KR",
@@ -25,7 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "세계 시간대 변환기 — MoneyStom7",
-    description: "전 세계 도시의 현재 시간을 한눈에. 무료 세계 시간대 변환기.",
+    description: "전 세계 도시의 현재 시간을 한눈에. Free world clock and timezone converter.",
   },
   robots: {
     index: true,
@@ -39,6 +37,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body>
         {children}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-GN51TN6PS4"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-GN51TN6PS4');
+          `}
+        </Script>
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8414331859152952"
