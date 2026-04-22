@@ -1,7 +1,5 @@
-"use client";
-import AdUnit from "@/components/AdUnit"
-
-import Script from "next/script"
+import TimezoneClient from "@/components/TimezoneClient";
+import Script from "next/script";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -13,79 +11,62 @@ const jsonLd = {
   operatingSystem: "Any",
   offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
   inLanguage: ["ko", "en"],
-}
-import { useState, useEffect } from "react";
+};
 
-const CITIES = [
-  { name: "서울",       tz: "Asia/Seoul",             flag: "🇰🇷" },
-  { name: "도쿄",       tz: "Asia/Tokyo",             flag: "🇯🇵" },
-  { name: "베이징",     tz: "Asia/Shanghai",           flag: "🇨🇳" },
-  { name: "싱가포르",   tz: "Asia/Singapore",          flag: "🇸🇬" },
-  { name: "두바이",     tz: "Asia/Dubai",              flag: "🇦🇪" },
-  { name: "이스탄불",   tz: "Europe/Istanbul",         flag: "🇹🇷" },
-  { name: "프랑크푸르트", tz: "Europe/Berlin",         flag: "🇩🇪" },
-  { name: "런던",       tz: "Europe/London",           flag: "🇬🇧" },
-  { name: "상파울루",   tz: "America/Sao_Paulo",       flag: "🇧🇷" },
-  { name: "뉴욕",       tz: "America/New_York",        flag: "🇺🇸" },
-  { name: "시카고",     tz: "America/Chicago",         flag: "🇺🇸" },
-  { name: "로스앤젤레스", tz: "America/Los_Angeles",  flag: "🇺🇸" },
-  { name: "시드니",     tz: "Australia/Sydney",        flag: "🇦🇺" },
-  { name: "오클랜드",   tz: "Pacific/Auckland",        flag: "🇳🇿" },
-];
-
-const fmt = (tz: string, opts: Intl.DateTimeFormatOptions) =>
-  new Date().toLocaleString("ko-KR", { timeZone: tz, ...opts });
-
-export default function TimezonePlanner() {
-  const [tick, setTick] = useState(0);
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    const id = setInterval(() => setTick(t => t + 1), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const filtered = CITIES.filter(c => c.name.includes(search) || c.tz.toLowerCase().includes(search.toLowerCase()));
-
+export default function Page() {
   return (
     <div className="min-h-screen bg-gray-950 text-white p-4 font-sans">
-      <div className="max-w-2xl mx-auto pt-10">
-        <div className="text-center mb-8">
-          <div className="text-5xl mb-3">🌏</div>
-          <h1 className="text-3xl font-bold tracking-tight">세계 시간대</h1>
-          <p className="text-gray-400 mt-1 text-sm">World Timezone Planner · 실시간 업데이트</p>
+      <Script id="json-ld" type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
+      <TimezoneClient />
+
+      <section className="max-w-2xl mx-auto mt-16 space-y-10 text-sm text-gray-400 pb-16">
+        <div>
+          <h2 className="text-white text-base font-semibold mb-3">세계 시간대 변환기란?</h2>
+          <p>
+            세계 시간대 변환기(World Timezone Planner)는 전 세계 14개 주요 도시의 현재 시간을
+            실시간으로 보여주는 무료 온라인 세계 시계입니다. 서울, 뉴욕, 런던, 도쿄 등의 현재 시간을
+            한눈에 확인할 수 있어 해외 미팅 일정을 잡거나 국제 비즈니스 커뮤니케이션에 유용합니다.
+          </p>
         </div>
 
-        <input type="text" value={search} onChange={e => setSearch(e.target.value)}
-          placeholder="도시 또는 시간대 검색..."
-          className="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 mb-4 text-sm focus:outline-none focus:border-emerald-500 transition-colors" />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {filtered.map(city => {
-            void tick; // force re-render
-            const time = fmt(city.tz, { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
-            const date = fmt(city.tz, { weekday: "short", month: "short", day: "numeric" });
-            return (
-              <div key={city.tz} className="bg-gray-900 rounded-xl p-4 hover:border hover:border-emerald-500/30 border border-transparent transition-all">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">{city.flag}</span>
-                    <div>
-                      <p className="font-medium text-sm">{city.name}</p>
-                      <p className="text-xs text-gray-500">{date}</p>
-                    </div>
-                  </div>
-                  <span className="font-mono text-xl text-emerald-400 font-bold tabular-nums">{time}</span>
-                </div>
-              </div>
-            );
-          })}
+        <div>
+          <h2 className="text-white text-base font-semibold mb-3">지원 도시 및 시간대</h2>
+          <ul className="grid grid-cols-2 gap-1.5 list-none">
+            <li>🇰🇷 서울 (KST, UTC+9)</li>
+            <li>🇯🇵 도쿄 (JST, UTC+9)</li>
+            <li>🇨🇳 베이징 (CST, UTC+8)</li>
+            <li>🇸🇬 싱가포르 (SGT, UTC+8)</li>
+            <li>🇦🇪 두바이 (GST, UTC+4)</li>
+            <li>🇩🇪 프랑크푸르트 (CET/CEST)</li>
+            <li>🇬🇧 런던 (GMT/BST)</li>
+            <li>🇺🇸 뉴욕 (EST/EDT)</li>
+            <li>🇺🇸 시카고 (CST/CDT)</li>
+            <li>🇺🇸 로스앤젤레스 (PST/PDT)</li>
+            <li>🇧🇷 상파울루 (BRT)</li>
+            <li>🇦🇺 시드니 (AEST/AEDT)</li>
+          </ul>
         </div>
 
-        <p className="text-center text-xs text-gray-600 mt-10">
-          <a href="https://moneystom7.com" className="hover:text-gray-400 transition-colors">← MoneyStom7 홈으로</a>
-        </p>
-      </div>
+        <div>
+          <h2 className="text-white text-base font-semibold mb-3">자주 묻는 질문 (FAQ)</h2>
+          <dl className="space-y-4">
+            <div>
+              <dt className="text-gray-300 font-medium">한국(서울)과 뉴욕의 시차는 얼마인가요?</dt>
+              <dd className="mt-1">서울(KST)은 UTC+9, 뉴욕(EST)은 UTC-5로 평상시 14시간 차이가 납니다. 미국 서머타임(EDT, UTC-4) 적용 시 13시간 차이입니다.</dd>
+            </div>
+            <div>
+              <dt className="text-gray-300 font-medium">서머타임(Daylight Saving Time)이 자동으로 반영되나요?</dt>
+              <dd className="mt-1">네. 브라우저의 Intl API를 사용하여 각 도시의 서머타임이 자동으로 적용됩니다. 별도 설정 없이 정확한 현지 시간을 확인할 수 있습니다.</dd>
+            </div>
+            <div>
+              <dt className="text-gray-300 font-medium">한국과 런던의 시차는?</dt>
+              <dd className="mt-1">서울(KST, UTC+9)과 런던(GMT, UTC+0)의 시차는 9시간입니다. 영국 서머타임(BST, UTC+1) 적용 시 8시간 차이입니다.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
     </div>
   );
 }
